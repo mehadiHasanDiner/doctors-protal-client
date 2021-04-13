@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import NavbarHeader from '../../Shared/NavbarHeader/NavbarHeader';
 import AppointmentHeader from '../AppointmentHeader/AppointmentHeader';
@@ -9,6 +9,7 @@ const Appointment = () => {
     const handleDateChange = date => {
         setSelectedData(date);
     }
+    
     return (
         <div>
             <NavbarHeader></NavbarHeader>

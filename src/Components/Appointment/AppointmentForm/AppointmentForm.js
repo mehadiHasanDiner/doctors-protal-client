@@ -23,6 +23,7 @@ const AppointmentForm = ({ modalIsOpen, closeModal, appointmentOn, date }) => {
         data.service = appointmentOn;
         data.date = date;
         data.created = new Date();
+        console.log(data)
         
         fetch('http://localhost:5000/addAppointment', {
             method: 'POST',
@@ -60,7 +61,7 @@ const AppointmentForm = ({ modalIsOpen, closeModal, appointmentOn, date }) => {
                     </div>
 
                     <div className="form-group">
-                        <input type="number" placeholder="Mobile number" {...register("number", { required: true, maxLength: 12 })} className="form-control" />
+                        <input type="text" placeholder="Mobile number" {...register("number", { required: true, maxLength: 12 })} className="form-control" />
                         {errors.number && <span className="text-danger">This field is required</span>}
 
                     </div>
