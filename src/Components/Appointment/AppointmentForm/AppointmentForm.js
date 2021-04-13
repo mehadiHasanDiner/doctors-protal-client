@@ -18,12 +18,25 @@ Modal.setAppElement('#root')
 
 const AppointmentForm = ({ modalIsOpen, closeModal, appointmentOn, date }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    
     const onSubmit = data => {
         data.service = appointmentOn;
         data.date = date;
         data.created = new Date();
-        console.log(data);
-        closeModal()
+        
+        fetch('http://localhost:5000/addAppointment', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(success => {
+            if(success){
+                closeModal();
+                alert('Appointment created successfully.');
+            }
+        })
+        
     }
 
 
@@ -40,7 +53,7 @@ const AppointmentForm = ({ modalIsOpen, closeModal, appointmentOn, date }) => {
                 <h2 className="text-center text-brand">{appointmentOn}</h2>
                 <p className="text-secondary text-center"><small>ON {date.toDateString()}</small></p>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form className="p-5" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
                         <input type="text" placeholder="Name" {...register("name", { required: true, maxLength: 80 })} className="form-control" />
                         {errors.name && <span className="text-danger">This field is required</span>}
@@ -81,15 +94,11 @@ const AppointmentForm = ({ modalIsOpen, closeModal, appointmentOn, date }) => {
 
                         </div>
                     </div>
-                    <br />
+                   
                     <div className="form-group text-right">
                         <button type="submit" className="btn btn-brand">Send</button>
                     </div>
                 </form>
-
-
-
-
             </Modal>
         </div>
     );
